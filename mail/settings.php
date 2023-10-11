@@ -1,5 +1,6 @@
 <?php
 include_once "../config/config.php";
+$myuserid = $getuserdata['user_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,11 +23,33 @@ include_once "../config/config.php";
                         <div class="mb-2 p-5 flex justify-center">
                         </div>
                         <div class="mb-2 p-2">
-                            <label for="dp" class="text-black font-semibold flex justify-center"><img src="../dp.png" class="w-48 rounded-full" alt="">
-                            <input type="file" style="display:none" name="dp" id="dp" accept="image/*" class="mt-5 p-5 border rounded w-full">
+                            <label for="dp" class="text-black font-semibold flex justify-center">
+
+    <?php if($getuserdata['dp']):?>
+        <img src="dp/<?=$getuserdata['dp'];?>"
+         class="w-48 h-48 rounded-full">
+         <?php else: ?>
+         <img src="../dp.png"
+         class="w-48 h-48 rounded-full">
+    <?php endif;?>
+
+                            <input type="file" style="display:none" name="dp" onchange="this.form.submit()" id="dp" accept="image/*" class="mt-5 p-5 border rounded w-full">
                             </label>
                         </div>
                     </form>
+                    <h2 class="text-center font-bold text-xl">Roni Saha</h2>
+                <?php
+                if(isset($_FILES['dp'])){
+                $dp = $_FILES['dp']['name'];
+                $tmp_dp = $_FILES['dp']['tmp_name'];
+                move_uploaded_file($tmp_dp,"dp/$dp");
+
+                $query = mysqli_query($connect,"UPDATE accounts SET dp ='$dp' WHERE user_id ='".$getuserdata['user_id']."'");
+                if($query){
+                    redirect('settings.php');
+            }
+                }
+                ?>
                 </div>
             </div>
 

@@ -1,3 +1,7 @@
+<?php
+$myuserid = $getuserdata['user_id'];
+?>
+
 <div class="container mt-5 px-10">
     <div class="flex">
         <div class="w-3/12 p-5 mt-4 text-center">

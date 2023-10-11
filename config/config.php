@@ -29,5 +29,5 @@
     }
     // Get my User id
 
-    $myuserid = $getuserdata['user_id'];
+//    $myuserid = $getuserdata['user_id'];
 ?>

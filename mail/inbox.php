@@ -53,19 +53,39 @@ include_once "side.php";
                 while($row = mysqli_fetch_array($callinginbox)):
             ?>
 
+            <a href="view_mail.php?mail_id=<?=$row['mail_id'];?>">
             <div class="bg-white rounded-lg shadow-md p-4 my-2">
-                <div class="flex items-center">
-                    <div class="flex items-center space-x-4">
-                        <a href="logout.php"><img src="../dp.png" class="w-10 h-10 rounded-full"></a></div>
-                    <div>
-                        <h2 class="text-lg font-semibold mx-3 mt-2"><?=$row['fname']." ".$row['lname'];?></h2>
-                        <p class="text-gray-600 mt-2"><?=$row['subject'];?>-<?=substr($row['content'],0,50);?>...</p>
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4 flex-1">
+                        <input type="checkbox" class="form-checkbox text-blue-500 h-6 w-6">
+    <?php if($row['dp']):?>
+        <img src="dp/<?=$getuserdata['dp'];?>"
+         class="w-10 h-10 rounded-full">
+    <?php else: ?>
+         <img src="../dp.png"
+         class="w-10 h-10 rounded-full">
+    <?php endif;?>
+                        <div>
+                            <h2 class="text-lg font-semibold mx-3 mt-2"><?=$row['fname']." ".$row['lname'];?></h2>
+                            <p class="text-gray-600 mt-2"><?=$row['subject'];?>-<?=substr($row['content'],0,50);?>...</p>
                         </div>
-                </div>  
+                    </div>
+                    <div class="flex gap-3">
+                        <p class="text-gray-600">2 days ago</p> 
+
+                        <?php
+                            $callingAttachment = mysqli_query($connect,"SELECT * FROM attachments WHERE mail_id='".$row['mail_id']."'");
+                            $countAttachment = mysqli_num_rows($callingAttachment);
+                            if($countAttachment > 0):
+                        ?>
+                        <p class="text-gray-600"><img src="../attachment.png" alt=""></p>  
+                        <?php endif;?>
+                    </div> 
+                </div>
             </div>
+            </a>
             <?php endwhile;?>
-        </div>
-        
+        </div>        
 </div>
 
     

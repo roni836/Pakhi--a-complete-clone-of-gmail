@@ -19,7 +19,7 @@ include_once "side.php";
         <div class="container mx-auto mt-8 p-4">
             <h1 class="text-2xl font-semibold mb-4">Compose Email</h1>
         
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
                     <!-- Recipient -->
                         <div class="mb-4">
                             <label for="user_to" class="block text-gray-600 font-medium">To</label>
@@ -54,12 +54,6 @@ include_once "side.php";
                     $subject = $_POST['subject'];           
                     $user_by = $getuserdata['user_id'];
 
-                    if(count($_FILES) > 0):
-                    // File Work
-                    $attachment = $_FILES['attachment']['name'];
-                    $tmp_attachment = $_FILES['attachment']['tmp_name'];
-                    move_uploaded_file($tmp_attachment,"attach/$attachment");
-                    endif;
 
                     $checkuser = mysqli_query($connect,"SELECT * FROM accounts WHERE email='$user_to' AND user_id <> '$user_by'");
                     $count_checkuser = mysqli_num_rows($checkuser);
@@ -79,6 +73,16 @@ include_once "side.php";
                            $compose_mail = mysqli_query($connect,"INSERT INTO mail(user_to,user_by,subject,content,isDraft) value('$gettouserid','$user_by','$subject','$content','$isDraft')");
 
                            if($compose_mail){
+                            if(count($_FILES) > 0):
+                                // File Work
+                                $attachment = $_FILES['attachment']['name'];
+                                $tmp_attachment = $_FILES['attachment']['tmp_name'];
+                                move_uploaded_file($tmp_attachment,"attach/$attachment");
+                                
+                                $currentMailId = mysqli_insert_id($connect);
+                                $queryForInsertAttachment = mysqli_query($connect,"INSERT INTO attachments(attachment,mail_id) value('$attachment','$currentMailId')");
+                            endif;
+
                             alert('Mail Sent Successfully');
                             redirect('inbox.php');
                            }

@@ -4,7 +4,7 @@
   <div class="flex flex-1 justify-end gap-3 items-center">
     <a href="settings.php" class="flex items-center gap-3">
       <?php if($getuserdata['dp']):?>
-        <img src="<?=$getuserdata['dp'];?>"
+        <img src="dp/<?=$getuserdata['dp'];?>"
          class="w-10 h-10 rounded-full">
          <?php else: ?>
          <img src="../dp.png"
