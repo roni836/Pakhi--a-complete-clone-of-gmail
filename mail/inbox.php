@@ -58,14 +58,7 @@ include_once "side.php";
                 <div class="flex justify-between items-center">
                     <div class="flex items-center space-x-4 flex-1">
                         <input type="checkbox" class="form-checkbox text-blue-500 h-6 w-6">
-    <?php if($row['dp']):?>
-        <img src="dp/<?=$getuserdata['dp'];?>"
-         class="w-10 h-10 rounded-full">
-    <?php else: ?>
-         <img src="../dp.png"
-         class="w-10 h-10 rounded-full">
-    <?php endif;?>
-                        <div>
+           <div>
                             <h2 class="text-lg font-semibold mx-3 mt-2"><?=$row['fname']." ".$row['lname'];?></h2>
                             <p class="text-gray-600 mt-2"><?=$row['subject'];?>-<?=substr($row['content'],0,50);?>...</p>
                         </div>
